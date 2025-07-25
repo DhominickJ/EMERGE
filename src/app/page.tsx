@@ -140,8 +140,8 @@ export default function HomePage() {
             <div className='flex-1 h-2 bg-[#b92727] ml-2' />
           </div>
           <div className='flex justify-center gap-8'>
-            <Image src='/wvsu-logo.png' alt='Logo 1' width={112} height={112} className='rounded-xl w-24 h-24 md:w-28 md:h-28 object-contain' />
-            <Image src='/cict-logo.png' alt='Logo 2' width={112} height={112} className='rounded-xl w-24 h-24 md:w-28 md:h-28 object-contain' />
+            <Image src='/wvsu-logo.PNG' alt='Logo 1' width={112} height={112} className='rounded-xl w-24 h-24 md:w-28 md:h-28 object-contain' />
+            <Image src='/cict-logo.PNG' alt='Logo 2' width={112} height={112} className='rounded-xl w-24 h-24 md:w-28 md:h-28 object-contain' />
             <Image src='/sb-logo.png' alt='Logo 3' width={112} height={112} className='rounded-xl w-24 h-24 md:w-28 md:h-28 object-contain' />
             <Image src='/sbdrrmo.jpg' alt='Logo 4' width={112} height={112} className='rounded-xl w-24 h-24 md:w-28 md:h-28 object-contain' />
             <Image src='/trrdmo.jpg' alt='Logo 5' width={112} height={112} className='rounded-xl w-24 h-24 md:w-28 md:h-28 object-contain' />
