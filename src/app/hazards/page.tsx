@@ -1,16 +1,28 @@
 import { ListIcon } from "@phosphor-icons/react/dist/ssr";
 import { MagnifyingGlassIcon } from "@phosphor-icons/react/dist/ssr";
 import CustomButton from "../components/customButton";
-import MapView from "../components/mapRender";
-// import dynamic from "next/dynamic";
 
-// Importing non-server side code import
-// const MapView = dynamic(() => import("../components/mapRender"), {
-//   loading: () => <p>A map is loading</p>,
-//   ssr: false,
-// });
+import type { iconType, MarkerData } from "../components/mapMarkers";
+import MapWrapper from "../components/mapWrapper";
+
+const iconIndex: Record<number, iconType> = {
+  1: "earthquake",
+  2: "flood",
+  3: "landslide",
+  4: "responder",
+};
 
 export default function Hazards() {
+  let max = 4;
+
+  const markers: MarkerData[] = Array.from({ length: 500 }, (_, i) => ({
+    id: i,
+    lat: 10.757125443374584 + Math.random() * 0.1,
+    lng: 122.47220080086756 + Math.random() * 0.1,
+    iconType: iconIndex[Math.floor(Math.random() * max) + 1],
+    title: `Marker ${i}`,
+  }));
+
   return (
     <main className="flex flex-col bg-white justify-between">
       <div className="flex w-full items-center text-black z-100 absolute p-5">
@@ -36,7 +48,7 @@ export default function Hazards() {
         </div>
       </div>
       <div id="map">
-        <MapView />
+        <MapWrapper markers={markers} />
       </div>
     </main>
   );
