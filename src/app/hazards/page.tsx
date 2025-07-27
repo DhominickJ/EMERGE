@@ -5,15 +5,15 @@ import CustomButton from "../components/customButton";
 import type { iconType, MarkerData } from "../components/mapMarkers";
 import MapWrapper from "../components/mapWrapper";
 
-const iconIndex: Record<number, iconType> = {
-  1: "earthquake",
-  2: "flood",
-  3: "landslide",
-  4: "responder",
-};
-
 export default function Hazards() {
   let max = 4;
+
+  const iconIndex: Record<number, iconType> = {
+    1: "earthquake",
+    2: "flood",
+    3: "landslide",
+    4: "responder",
+  };
 
   const markers: MarkerData[] = Array.from({ length: 500 }, (_, i) => ({
     id: i,
