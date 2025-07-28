@@ -4,10 +4,7 @@ import CustomButton from "../components/customButton";
 import ClientOnly from "../components/clientOnly";
 import MapLibre3D from "../components/map3d";
 import { MarkerData } from "../components/map3d";
-import { iconType } from "../components/mapMarkers";
-
-// import type { iconType, MarkerData } from "../components/mapMarkers";
-// import MapWrapper from "../components/mapWrapper";
+import { iconType } from "../components/map3d";
 
 export default function Hazards() {
   let max = 4;

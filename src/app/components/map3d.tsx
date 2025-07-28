@@ -12,6 +12,8 @@ export type MarkerData = {
   title?: string;
 };
 
+export type iconType = "earthquake" | "landslide" | "flood" | "responder";
+
 export default function MapLibre3D({ markers }: { markers: MarkerData[] }) {
   const mapRef = useRef<maplibregl.Map | null>(null);
 
