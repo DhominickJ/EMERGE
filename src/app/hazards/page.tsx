@@ -1,9 +1,13 @@
 import { ListIcon } from "@phosphor-icons/react/dist/ssr";
 import { MagnifyingGlassIcon } from "@phosphor-icons/react/dist/ssr";
 import CustomButton from "../components/customButton";
+import ClientOnly from "../components/clientOnly";
+import MapLibre3D from "../components/map3d";
+import { MarkerData } from "../components/map3d";
+import { iconType } from "../components/mapMarkers";
 
-import type { iconType, MarkerData } from "../components/mapMarkers";
-import MapWrapper from "../components/mapWrapper";
+// import type { iconType, MarkerData } from "../components/mapMarkers";
+// import MapWrapper from "../components/mapWrapper";
 
 export default function Hazards() {
   let max = 4;
@@ -19,7 +23,7 @@ export default function Hazards() {
     id: i,
     lat: 10.757125443374584 + Math.random() * 0.1,
     lng: 122.47220080086756 + Math.random() * 0.1,
-    iconType: iconIndex[Math.floor(Math.random() * max) + 1],
+    type: iconIndex[Math.floor(Math.random() * max) + 1],
     title: `Marker ${i}`,
   }));
 
@@ -48,7 +52,9 @@ export default function Hazards() {
         </div>
       </div>
       <div id="map">
-        <MapWrapper markers={markers} />
+        <ClientOnly>
+          <MapLibre3D markers={markers} />
+        </ClientOnly>
       </div>
     </main>
   );

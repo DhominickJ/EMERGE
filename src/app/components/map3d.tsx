@@ -31,7 +31,7 @@ export default function MapLibre3D({ markers }: { markers: MarkerData[] }) {
     // Add markers
     markers.forEach((marker) => {
       const el = document.createElement("div");
-      el.className = "custom-marker";
+      el.className = "";
       el.style.backgroundImage = `url(/icons/${marker.type}.svg)`; // e.g., responder.png
       el.style.width = "32px";
       el.style.height = "32px";
@@ -48,5 +48,5 @@ export default function MapLibre3D({ markers }: { markers: MarkerData[] }) {
     };
   }, [markers]);
 
-  return <div id="map" className="w-full h-screen rounded-xl shadow-lg" />;
+  return <div id="map" className="w-full h-[90vh] z-0 rounded-xl shadow-lg" />;
 }

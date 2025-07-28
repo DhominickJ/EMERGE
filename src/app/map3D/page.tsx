@@ -24,7 +24,7 @@ export default function Map3DPage() {
 
   console.log(markers[0]);
   return (
-    <main className="w-full h-screen relative-">
+    <main className="w-full h-[90vh]">
       <ClientOnly>
         <MapLibre3D markers={markers} />
       </ClientOnly>
