@@ -3,8 +3,9 @@ import { MagnifyingGlassIcon } from "@phosphor-icons/react/dist/ssr";
 import CustomButton from "../components/customButton";
 import ClientOnly from "../components/clientOnly";
 import MapLibre3D from "../components/map3d";
-import { MarkerData } from "../components/map3d";
-import { iconType } from "../components/map3d";
+
+// Types for import
+import { iconType, MarkerData, mapType } from "../components/map3d";
 
 export default function Hazards() {
   let max = 4;
@@ -50,7 +51,7 @@ export default function Hazards() {
       </div>
       <div id="map">
         <ClientOnly>
-          <MapLibre3D markers={markers} />
+          <MapLibre3D markers={markers} mapType="liberty" />
         </ClientOnly>
       </div>
     </main>

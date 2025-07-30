@@ -3,6 +3,7 @@
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { useEffect, useRef } from "react";
+import { GeoJSON } from "geojson";
 
 export type MarkerData = {
   id: number;
@@ -60,9 +61,11 @@ const RotateControl = () => {
 export default function MapLibre3D({
   markers,
   mapType = "liberty",
+  geojson,
 }: {
   markers: MarkerData[];
   mapType: string;
+  geojson: GeoJSON;
 }) {
   const mapRef = useRef<maplibregl.Map | null>(null);
 
@@ -78,6 +81,17 @@ export default function MapLibre3D({
       dragPan: true,
     });
 
+    map.addSource("geojson", {
+      type: "geojson",
+      data: geojson,
+      cluster: true,
+      clusterMaxZoom: 17,
+      clusterRadius: 50,
+    });
+
+    if (map.listImages().includes("marker-icon") == false) {
+      let image = map.loadImage(`${geojson.type}`);
+    }
     map.dragRotate.enable();
 
     mapRef.current = map;
