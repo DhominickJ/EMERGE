@@ -26,7 +26,7 @@ export default function Map3DPage() {
   return (
     <main className="w-full h-[90vh]">
       <ClientOnly>
-        <MapLibre3D markers={markers} />
+        <MapLibre3D markers={markers} mapType="positron" />
       </ClientOnly>
     </main>
   );

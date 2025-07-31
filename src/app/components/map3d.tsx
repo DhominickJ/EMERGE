@@ -3,6 +3,7 @@
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { useEffect, useRef } from "react";
+import { GeoJSON } from "geojson";
 
 export type MarkerData = {
   id: number;
@@ -10,25 +11,116 @@ export type MarkerData = {
   lng: number;
   type: string;
   title?: string;
+  riskScore?: number;
+  cluster?: number;
 };
 
 export type iconType = "earthquake" | "landslide" | "flood" | "responder";
+export type mapType = "liberty" | "positron" | "bright";
 
-export default function MapLibre3D({ markers }: { markers: MarkerData[] }) {
+const RotateControl = () => {
+  class Control {
+    _map: maplibregl.Map | undefined;
+    _container!: HTMLElement;
+
+    onAdd(map: maplibregl.Map) {
+      this._map = map;
+      this._container = document.createElement("div");
+      this._container.className = "maplibregl-ctrl maplibregl-ctrl-group";
+
+      const button = document.createElement("button");
+      button.className = "maplibregl-ctrl-icon text-black font-bold";
+      button.type = "button";
+      button.title = "Rotate Map";
+      button.innerHTML = "⟳";
+
+      button.onclick = () => {
+        const currentBearing = map.getBearing();
+        map.easeTo({
+          bearing: currentBearing + 90,
+          duration: 800,
+        });
+      };
+
+      this._container.appendChild(button);
+      return this._container;
+    }
+
+    onRemove() {
+      this._container.parentNode?.removeChild(this._container);
+      this._map = undefined;
+    }
+
+    getDefaultPosition(): maplibregl.ControlPosition {
+      return "top-right";
+    }
+  }
+  return new Control();
+};
+
+export default function MapLibre3D({
+  markers,
+  mapType = "liberty",
+}: {
+  markers: MarkerData[];
+  mapType: string;
+}) {
   const mapRef = useRef<maplibregl.Map | null>(null);
 
   useEffect(() => {
     const map = new maplibregl.Map({
       container: "map",
-      style: "https://tiles.openfreemap.org/styles/liberty",
+      style: `https://tiles.openfreemap.org/styles/${mapType}`,
       center: [122.56, 10.72],
       zoom: 16,
       pitch: 60,
-      bearing: -20,
-      // antialias: true,
+      bearing: 0,
+      dragRotate: true,
+      dragPan: true,
     });
 
+    // map.addSource("geojson", {
+    //   type: "geojson",
+    //   data: geojson,
+    //   cluster: true,
+    //   clusterMaxZoom: 17,
+    //   clusterRadius: 50,
+    // });
+
+    // if (map.listImages().includes("marker-icon") == false) {
+    //   let image = map.loadImage(`${geojson.type}`);
+    // }
+
+    map.dragRotate.enable();
+
     mapRef.current = map;
+
+    if (!mapRef.current) return;
+
+    map.addControl(
+      new maplibregl.NavigationControl({ visualizePitch: true }),
+      "bottom-right"
+    );
+    map.addControl(RotateControl(), "bottom-right");
+
+    setTimeout(() => {
+      const compass = document.querySelector(
+        ".maplibregl-ctrl-compass"
+      ) as HTMLButtonElement;
+
+      if (compass) {
+        compass.onclick = () => {
+          const currentBearing = mapRef.current?.getBearing() ?? 0;
+          const newBearing = currentBearing >= 180 ? 0 : 180;
+
+          mapRef.current?.easeTo({
+            pitch: currentBearing >= 180 ? 0 : 60,
+            bearing: newBearing,
+            duration: 1000,
+          });
+        };
+      }
+    }, 500);
 
     // Add markers
     markers.forEach((marker) => {

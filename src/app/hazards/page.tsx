@@ -50,7 +50,7 @@ export default function Hazards() {
       </div>
       <div id="map">
         <ClientOnly>
-          <MapLibre3D markers={markers} />
+          <MapLibre3D markers={markers} mapType="liberty" />
         </ClientOnly>
       </div>
     </main>
